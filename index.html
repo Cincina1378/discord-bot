@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DISCORD BOT</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #0b0d12;
+            color: white;
+        }
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 240px;
+            background: #11141b;
+            border-right: 1px solid #242936;
+            padding: 25px 15px;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 35px;
+        }
+
+        .menu {
+            display: block;
+            width: 100%;
+            padding: 13px;
+            margin-bottom: 8px;
+            border: 0;
+            border-radius: 8px;
+            background: transparent;
+            color: #aaa;
+            text-align: left;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        .menu:hover,
+        .menu.active {
+            background: #5865f2;
+            color: white;
+        }
+
+        .content {
+            margin-left: 240px;
+            padding: 35px;
+        }
+
+        .top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        .button {
+            background: #5865f2;
+            border: 0;
+            color: white;
+            padding: 12px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .button:hover {
+            background: #4752c4;
+        }
+
+        .card {
+            background: #151922;
+            border: 1px solid #242936;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+
+        .bot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .bot-info h2 {
+            margin: 0 0 7px;
+        }
+
+        .status {
+            color: #57f287;
+            font-size: 14px;
+        }
+
+        .empty {
+            color: #888;
+            text-align: center;
+            padding: 50px 20px;
+        }
+
+        @media (max-width: 700px) {
+            .sidebar {
+                width: 70px;
+            }
+
+            .logo {
+                font-size: 0;
+            }
+
+            .logo::after {
+                content: "DB";
+                font-size: 20px;
+            }
+
+            .content {
+                margin-left: 70px;
+                padding: 20px;
+            }
+
+            .menu {
+                font-size: 0;
+                text-align: center;
+            }
+
+            .menu::first-letter {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <aside class="sidebar">
+        <div class="logo">DISCORD BOT</div>
+
+        <button class="menu active">🤖 Botlarım</button>
+        <button class="menu">⚙️ Ayarlar</button>
+    </aside>
+
+    <main class="content">
+
+        <div class="top">
+            <div>
+                <h1>Botlarım</h1>
+                <p style="color:#888;">Discord botlarını buradan yönet.</p>
+            </div>
+
+            <button class="button" onclick="createBot()">
+                + Yeni Bot
+            </button>
+        </div>
+
+        <div id="botList">
+
+            <div class="card empty">
+                Henüz bot oluşturmadın.
+                <br><br>
+
+                <button class="button" onclick="createBot()">
+                    İlk Botunu Oluştur
+                </button>
+            </div>
+
+        </div>
+
+    </main>
+
+    <script>
+        function createBot() {
+            const name = prompt("Botunun adı ne olsun?");
+
+            if (!name) return;
+
+            const botList = document.getElementById("botList");
+
+            botList.innerHTML = `
+                <div class="card">
+                    <div class="bot">
+                        <div class="bot-info">
+                            <h2>${name}</h2>
+                            <div class="status">● Hazır</div>
+                        </div>
+
+                        <button class="button" onclick="openBot('${name}')">
+                            Yönet
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function openBot(name) {
+            alert(name + " yönetim paneli yakında burada olacak.");
+        }
+    </script>
+
+</body>
+</html>
