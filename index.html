@@ -1,214 +1,1015 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DISCORD BOT</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DISCORD BOT</title>
 
-    <style>
-        * {
-            box-sizing: border-box;
-        }
+<style>
+* {
+    box-sizing: border-box;
+}
 
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #0b0d12;
-            color: white;
-        }
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #0b0d12;
+    color: white;
+}
 
-        .sidebar {
-            position: fixed;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: 240px;
-            background: #11141b;
-            border-right: 1px solid #242936;
-            padding: 25px 15px;
-        }
+button,
+input {
+    font-family: inherit;
+}
 
-        .logo {
-            font-size: 22px;
-            font-weight: bold;
-            margin-bottom: 35px;
-        }
+.screen {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
 
-        .menu {
-            display: block;
-            width: 100%;
-            padding: 13px;
-            margin-bottom: 8px;
-            border: 0;
-            border-radius: 8px;
-            background: transparent;
-            color: #aaa;
-            text-align: left;
-            font-size: 15px;
-            cursor: pointer;
-        }
+.box {
+    width: 100%;
+    max-width: 430px;
+    background: #151922;
+    border: 1px solid #242936;
+    border-radius: 16px;
+    padding: 32px;
+    box-shadow: 0 20px 60px rgba(0,0,0,.35);
+}
 
-        .menu:hover,
-        .menu.active {
-            background: #5865f2;
-            color: white;
-        }
+.logo {
+    text-align: center;
+    font-size: 27px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
 
-        .content {
-            margin-left: 240px;
-            padding: 35px;
-        }
+.subtitle {
+    text-align: center;
+    color: #8d93a1;
+    margin-bottom: 30px;
+}
 
-        .top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-        }
+label {
+    display: block;
+    margin-bottom: 8px;
+    color: #d9dce3;
+    font-size: 14px;
+}
 
-        h1 {
-            margin: 0;
-        }
+input {
+    width: 100%;
+    height: 48px;
+    padding: 0 14px;
+    border-radius: 9px;
+    border: 1px solid #303644;
+    outline: none;
+    background: #0e1117;
+    color: white;
+    font-size: 15px;
+    margin-bottom: 18px;
+}
 
-        .button {
-            background: #5865f2;
-            border: 0;
-            color: white;
-            padding: 12px 18px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-        }
+input:focus {
+    border-color: #5865f2;
+}
 
-        .button:hover {
-            background: #4752c4;
-        }
+.button {
+    width: 100%;
+    height: 48px;
+    border: 0;
+    border-radius: 9px;
+    background: #5865f2;
+    color: white;
+    font-weight: bold;
+    font-size: 15px;
+    cursor: pointer;
+}
 
-        .card {
-            background: #151922;
-            border: 1px solid #242936;
-            border-radius: 12px;
-            padding: 25px;
-            margin-bottom: 20px;
-        }
+.button:hover {
+    background: #4752c4;
+}
 
-        .bot {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+.button:disabled {
+    opacity: .5;
+    cursor: not-allowed;
+}
 
-        .bot-info h2 {
-            margin: 0 0 7px;
-        }
+.link {
+    text-align: center;
+    margin-top: 20px;
+    color: #8d93a1;
+    font-size: 14px;
+}
 
-        .status {
-            color: #57f287;
-            font-size: 14px;
-        }
+.link button {
+    border: 0;
+    background: none;
+    color: #5865f2;
+    cursor: pointer;
+    font-weight: bold;
+}
 
-        .empty {
-            color: #888;
-            text-align: center;
-            padding: 50px 20px;
-        }
+.message {
+    display: none;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 18px;
+    font-size: 14px;
+}
 
-        @media (max-width: 700px) {
-            .sidebar {
-                width: 70px;
-            }
+.error {
+    background: rgba(237, 66, 69, .12);
+    border: 1px solid rgba(237, 66, 69, .35);
+    color: #ff7b7e;
+}
 
-            .logo {
-                font-size: 0;
-            }
+.success {
+    background: rgba(87, 242, 135, .12);
+    border: 1px solid rgba(87, 242, 135, .35);
+    color: #57f287;
+}
 
-            .logo::after {
-                content: "DB";
-                font-size: 20px;
-            }
+.hidden {
+    display: none !important;
+}
 
-            .content {
-                margin-left: 70px;
-                padding: 20px;
-            }
+/* PANEL */
 
-            .menu {
-                font-size: 0;
-                text-align: center;
-            }
+.dashboard {
+    min-height: 100vh;
+}
 
-            .menu::first-letter {
-                font-size: 20px;
-            }
-        }
-    </style>
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 240px;
+    background: #11141b;
+    border-right: 1px solid #242936;
+    padding: 25px 15px;
+}
+
+.sidebar-logo {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 35px;
+    padding-left: 10px;
+}
+
+.menu {
+    width: 100%;
+    border: 0;
+    background: transparent;
+    color: #aaa;
+    padding: 13px;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    text-align: left;
+    cursor: pointer;
+}
+
+.menu:hover,
+.menu.active {
+    background: #5865f2;
+    color: white;
+}
+
+.logout {
+    position: absolute;
+    left: 15px;
+    right: 15px;
+    bottom: 20px;
+    width: calc(100% - 30px);
+    padding: 12px;
+    border: 0;
+    border-radius: 8px;
+    background: #232733;
+    color: #aaa;
+    cursor: pointer;
+}
+
+.content {
+    margin-left: 240px;
+    padding: 35px;
+}
+
+.top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.top h1 {
+    margin: 0 0 7px;
+}
+
+.top p {
+    color: #888;
+    margin: 0;
+}
+
+.new-bot {
+    background: #5865f2;
+    color: white;
+    border: 0;
+    padding: 12px 18px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.card {
+    background: #151922;
+    border: 1px solid #242936;
+    border-radius: 12px;
+    padding: 25px;
+    margin-bottom: 20px;
+}
+
+.empty {
+    color: #888;
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.user-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.user-email {
+    color: #8d93a1;
+    margin-top: 5px;
+}
+
+@media (max-width: 700px) {
+
+    .box {
+        padding: 25px;
+    }
+
+    .sidebar {
+        width: 70px;
+    }
+
+    .sidebar-logo {
+        font-size: 0;
+        padding: 0;
+        text-align: center;
+    }
+
+    .sidebar-logo::after {
+        content: "DB";
+        font-size: 20px;
+    }
+
+    .menu {
+        font-size: 0;
+        text-align: center;
+    }
+
+    .content {
+        margin-left: 70px;
+        padding: 20px;
+    }
+
+    .top {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+}
+</style>
 </head>
 
 <body>
 
-    <aside class="sidebar">
-        <div class="logo">DISCORD BOT</div>
+<!-- KAYIT -->
 
-        <button class="menu active">🤖 Botlarım</button>
-        <button class="menu">⚙️ Ayarlar</button>
+<div id="registerScreen" class="screen">
+    <div class="box">
+
+        <div class="logo">DISCORD BOT</div>
+        <div class="subtitle">Hesap oluştur</div>
+
+        <div id="registerMessage" class="message"></div>
+
+        <label>E-posta</label>
+        <input
+            id="registerEmail"
+            type="email"
+            placeholder="E-posta adresin"
+            autocomplete="email"
+        >
+
+        <button
+            id="verifyButton"
+            class="button"
+            onclick="sendVerificationCode()"
+        >
+            Doğrula
+        </button>
+
+        <div class="link">
+            Zaten hesabın var mı?
+            <button onclick="showLogin()">Giriş Yap</button>
+        </div>
+
+    </div>
+</div>
+
+
+<!-- KOD -->
+
+<div id="codeScreen" class="screen hidden">
+    <div class="box">
+
+        <div class="logo">DISCORD BOT</div>
+        <div class="subtitle">E-posta doğrulama</div>
+
+        <div id="codeMessage" class="message"></div>
+
+        <p style="color:#aaa;text-align:center;font-size:14px;">
+            E-posta adresine gönderilen 6 haneli kodu gir.
+        </p>
+
+        <label>Doğrulama Kodu</label>
+
+        <input
+            id="verificationCode"
+            type="text"
+            inputmode="numeric"
+            maxlength="6"
+            placeholder="6 haneli kod"
+        >
+
+        <button
+            class="button"
+            onclick="verifyCode()"
+        >
+            Kodu Doğrula
+        </button>
+
+        <div class="link">
+            E-posta yanlış mı?
+            <button onclick="showRegister()">Değiştir</button>
+        </div>
+
+    </div>
+</div>
+
+
+<!-- HESAP OLUŞTUR -->
+
+<div id="accountScreen" class="screen hidden">
+    <div class="box">
+
+        <div class="logo">DISCORD BOT</div>
+        <div class="subtitle">Hesabını oluştur</div>
+
+        <div id="accountMessage" class="message"></div>
+
+        <label>Ad</label>
+        <input
+            id="accountName"
+            type="text"
+            placeholder="Adın"
+            autocomplete="name"
+        >
+
+        <label>Kullanıcı adı</label>
+        <input
+            id="accountUsername"
+            type="text"
+            placeholder="Kullanıcı adın"
+            autocomplete="username"
+        >
+
+        <label>Şifre</label>
+        <input
+            id="accountPassword"
+            type="password"
+            placeholder="Şifre"
+            autocomplete="new-password"
+        >
+
+        <label>Şifre tekrar</label>
+        <input
+            id="accountPasswordAgain"
+            type="password"
+            placeholder="Şifreni tekrar yaz"
+            autocomplete="new-password"
+        >
+
+        <button
+            class="button"
+            onclick="createAccount()"
+        >
+            Hesap Oluştur
+        </button>
+
+    </div>
+</div>
+
+
+<!-- GİRİŞ -->
+
+<div id="loginScreen" class="screen hidden">
+    <div class="box">
+
+        <div class="logo">DISCORD BOT</div>
+        <div class="subtitle">Giriş yap</div>
+
+        <div id="loginMessage" class="message"></div>
+
+        <label>E-posta</label>
+        <input
+            id="loginEmail"
+            type="email"
+            placeholder="E-posta adresin"
+            autocomplete="email"
+        >
+
+        <label>Şifre</label>
+        <input
+            id="loginPassword"
+            type="password"
+            placeholder="Şifren"
+            autocomplete="current-password"
+        >
+
+        <button
+            class="button"
+            onclick="login()"
+        >
+            Giriş Yap
+        </button>
+
+        <div class="link">
+            Hesabın yok mu?
+            <button onclick="showRegister()">Hesap Oluştur</button>
+        </div>
+
+    </div>
+</div>
+
+
+<!-- PANEL -->
+
+<div id="dashboardScreen" class="dashboard hidden">
+
+    <aside class="sidebar">
+
+        <div class="sidebar-logo">
+            DISCORD BOT
+        </div>
+
+        <button class="menu active">
+            Botlarım
+        </button>
+
+        <button class="menu">
+            Ayarlar
+        </button>
+
+        <button
+            class="logout"
+            onclick="logout()"
+        >
+            Çıkış Yap
+        </button>
+
     </aside>
 
     <main class="content">
 
         <div class="top">
+
             <div>
                 <h1>Botlarım</h1>
-                <p style="color:#888;">Discord botlarını buradan yönet.</p>
+                <p>Discord botlarını buradan yönet.</p>
             </div>
 
-            <button class="button" onclick="createBot()">
+            <button
+                class="new-bot"
+                onclick="createBot()"
+            >
                 + Yeni Bot
             </button>
+
         </div>
 
-        <div id="botList">
+        <div class="card user-card">
 
-            <div class="card empty">
-                Henüz bot oluşturmadın.
-                <br><br>
+            <div>
+                <strong id="dashboardName">
+                    Kullanıcı
+                </strong>
 
-                <button class="button" onclick="createBot()">
-                    İlk Botunu Oluştur
-                </button>
+                <div
+                    id="dashboardEmail"
+                    class="user-email"
+                >
+                    -
+                </div>
             </div>
 
+        </div>
+
+        <div
+            id="botList"
+            class="card empty"
+        >
+            Henüz bot oluşturmadın.
+            <br><br>
+
+            <button
+                class="new-bot"
+                onclick="createBot()"
+            >
+                İlk Botunu Oluştur
+            </button>
         </div>
 
     </main>
 
-    <script>
-        function createBot() {
-            const name = prompt("Botunun adı ne olsun?");
+</div>
 
-            if (!name) return;
 
-            const botList = document.getElementById("botList");
+<script>
 
-            botList.innerHTML = `
-                <div class="card">
-                    <div class="bot">
-                        <div class="bot-info">
-                            <h2>${name}</h2>
-                            <div class="status">● Hazır</div>
-                        </div>
+let verifiedEmail = "";
 
-                        <button class="button" onclick="openBot('${name}')">
-                            Yönet
-                        </button>
-                    </div>
+function hideAll() {
+
+    document
+        .querySelectorAll(".screen, .dashboard")
+        .forEach(element => {
+            element.classList.add("hidden");
+        });
+}
+
+function showRegister() {
+
+    hideAll();
+
+    document
+        .getElementById("registerScreen")
+        .classList.remove("hidden");
+}
+
+function showLogin() {
+
+    hideAll();
+
+    document
+        .getElementById("loginScreen")
+        .classList.remove("hidden");
+}
+
+function showCode() {
+
+    hideAll();
+
+    document
+        .getElementById("codeScreen")
+        .classList.remove("hidden");
+}
+
+function showAccount() {
+
+    hideAll();
+
+    document
+        .getElementById("accountScreen")
+        .classList.remove("hidden");
+}
+
+function showDashboard() {
+
+    hideAll();
+
+    document
+        .getElementById("dashboardScreen")
+        .classList.remove("hidden");
+}
+
+function showMessage(id, text, type) {
+
+    const message = document.getElementById(id);
+
+    message.textContent = text;
+    message.className = "message " + type;
+    message.style.display = "block";
+}
+
+function validEmail(email) {
+
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+
+/*
+    GERÇEK SİSTEMDE BURASI BACKEND'E BAĞLANACAK.
+
+    Şimdilik sadece ekran akışını test etmek için
+    örnek doğrulama kodu oluşturuyoruz.
+
+    GERÇEK E-POSTA KODU:
+    Backend tarafından gönderilecek.
+*/
+
+let testVerificationCode = "";
+
+
+function sendVerificationCode() {
+
+    const email =
+        document
+        .getElementById("registerEmail")
+        .value
+        .trim();
+
+    if (!email) {
+
+        showMessage(
+            "registerMessage",
+            "Lütfen e-posta adresini yaz.",
+            "error"
+        );
+
+        return;
+    }
+
+    if (!validEmail(email)) {
+
+        showMessage(
+            "registerMessage",
+            "Geçerli bir e-posta adresi yaz.",
+            "error"
+        );
+
+        return;
+    }
+
+    verifiedEmail = email;
+
+    /*
+        TEST İÇİN KOD OLUŞTURUYORUZ.
+        Backend geldiğinde bu kaldırılacak.
+    */
+
+    testVerificationCode =
+        Math.floor(
+            100000 + Math.random() * 900000
+        ).toString();
+
+    console.log(
+        "TEST DOĞRULAMA KODU:",
+        testVerificationCode
+    );
+
+    showCode();
+}
+
+
+function verifyCode() {
+
+    const code =
+        document
+        .getElementById("verificationCode")
+        .value
+        .trim();
+
+    if (!code) {
+
+        showMessage(
+            "codeMessage",
+            "Doğrulama kodunu yaz.",
+            "error"
+        );
+
+        return;
+    }
+
+    if (!/^\d{6}$/.test(code)) {
+
+        showMessage(
+            "codeMessage",
+            "Kod 6 haneli olmalıdır.",
+            "error"
+        );
+
+        return;
+    }
+
+    if (code !== testVerificationCode) {
+
+        showMessage(
+            "codeMessage",
+            "Doğrulama kodu yanlış.",
+            "error"
+        );
+
+        return;
+    }
+
+    showAccount();
+}
+
+
+function createAccount() {
+
+    const name =
+        document
+        .getElementById("accountName")
+        .value
+        .trim();
+
+    const username =
+        document
+        .getElementById("accountUsername")
+        .value
+        .trim();
+
+    const password =
+        document
+        .getElementById("accountPassword")
+        .value;
+
+    const passwordAgain =
+        document
+        .getElementById("accountPasswordAgain")
+        .value;
+
+
+    if (!name || !username || !password || !passwordAgain) {
+
+        showMessage(
+            "accountMessage",
+            "Tüm alanları doldur.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    if (password.length < 8) {
+
+        showMessage(
+            "accountMessage",
+            "Şifre en az 8 karakter olmalıdır.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    if (password !== passwordAgain) {
+
+        showMessage(
+            "accountMessage",
+            "Şifreler aynı değil.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    /*
+        TEST AMAÇLI.
+        Gerçek sistemde kullanıcı backend veritabanına
+        kaydedilecek.
+    */
+
+    const account = {
+
+        name: name,
+        username: username,
+        email: verifiedEmail
+
+    };
+
+    localStorage.setItem(
+        "discordBotAccount",
+        JSON.stringify(account)
+    );
+
+    loadDashboard(account);
+}
+
+
+function login() {
+
+    const email =
+        document
+        .getElementById("loginEmail")
+        .value
+        .trim();
+
+    const password =
+        document
+        .getElementById("loginPassword")
+        .value;
+
+
+    if (!email || !password) {
+
+        showMessage(
+            "loginMessage",
+            "E-posta ve şifreyi doldur.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    /*
+        TEST AMAÇLI.
+        Gerçek giriş backend üzerinden yapılacak.
+    */
+
+    const saved =
+        localStorage.getItem("discordBotAccount");
+
+
+    if (!saved) {
+
+        showMessage(
+            "loginMessage",
+            "Bu e-posta ile kayıtlı hesap bulunamadı.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    const account =
+        JSON.parse(saved);
+
+
+    if (account.email !== email) {
+
+        showMessage(
+            "loginMessage",
+            "E-posta veya şifre yanlış.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    loadDashboard(account);
+}
+
+
+function loadDashboard(account) {
+
+    document.getElementById(
+        "dashboardName"
+    ).textContent = account.name;
+
+
+    document.getElementById(
+        "dashboardEmail"
+    ).textContent = account.email;
+
+
+    localStorage.setItem(
+        "discordBotLoggedIn",
+        "true"
+    );
+
+
+    showDashboard();
+}
+
+
+function logout() {
+
+    localStorage.removeItem(
+        "discordBotLoggedIn"
+    );
+
+    showLogin();
+}
+
+
+function createBot() {
+
+    const name =
+        prompt("Botunun adı ne olsun?");
+
+
+    if (!name) return;
+
+
+    const botList =
+        document.getElementById("botList");
+
+
+    botList.className = "card";
+
+
+    botList.innerHTML = `
+
+        <div style="
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            gap:20px;
+        ">
+
+            <div>
+
+                <h2 style="margin:0 0 7px;">
+                    ${escapeHtml(name)}
+                </h2>
+
+                <div style="color:#57f287;">
+                    ● Hazır
                 </div>
-            `;
-        }
 
-        function openBot(name) {
-            alert(name + " yönetim paneli yakında burada olacak.");
-        }
-    </script>
+            </div>
+
+            <button
+                class="new-bot"
+                onclick="openBot()"
+            >
+                Yönet
+            </button>
+
+        </div>
+
+    `;
+}
+
+
+function openBot() {
+
+    alert(
+        "Bot yönetim paneli backend bağlantısından sonra açılacak."
+    );
+}
+
+
+function escapeHtml(text) {
+
+    const div =
+        document.createElement("div");
+
+    div.textContent = text;
+
+    return div.innerHTML;
+}
+
+
+/*
+    SAYFA AÇILDIĞINDA OTURUM KONTROLÜ
+*/
+
+window.addEventListener("load", () => {
+
+    const loggedIn =
+        localStorage.getItem(
+            "discordBotLoggedIn"
+        );
+
+    const saved =
+        localStorage.getItem(
+            "discordBotAccount"
+        );
+
+
+    if (loggedIn === "true" && saved) {
+
+        const account =
+            JSON.parse(saved);
+
+        loadDashboard(account);
+
+    } else {
+
+        showRegister();
+
+    }
+
+});
+
+</script>
 
 </body>
 </html>
